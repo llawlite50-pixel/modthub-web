@@ -1,56 +1,202 @@
+
 (() => {
   "use strict";
+
+  // Replace these with your actual Supabase project values.
+  // Never put your secret/service-role key in this file.
+  const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
+  const SUPABASE_PUBLISHABLE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
 
   const themeToggle = document.getElementById("themeToggle");
   const searchInput = document.getElementById("searchInput");
   const currentYear = document.getElementById("currentYear");
+  const appCount = document.getElementById("appCount");
+  const emptyState = document.getElementById("emptyState");
+  const appsSection = document.getElementById("apps");
 
-  // Theme setup
+  let allApps = [];
+
+  // Theme
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
 
-    themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
-
-    themeToggle.setAttribute(
-      "aria-label",
-      theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-    );
+    if (themeToggle) {
+      themeToggle.textContent = theme === "dark" ? "☀️" : "🌙";
+      themeToggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+      );
+    }
 
     localStorage.setItem("modprehub-theme", theme);
   }
 
-  const savedTheme = localStorage.getItem("modprehub-theme") || "dark";
-  applyTheme(savedTheme);
+  applyTheme(localStorage.getItem("modprehub-theme") || "dark");
 
-  themeToggle.addEventListener("click", () => {
-    const currentTheme =
+  themeToggle?.addEventListener("click", () => {
+    const current =
       document.documentElement.getAttribute("data-theme");
-
-    applyTheme(currentTheme === "dark" ? "light" : "dark");
+    applyTheme(current === "dark" ? "light" : "dark");
   });
 
-  // Current year
-  currentYear.textContent = new Date().getFullYear();
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
+  }
 
-  // Search placeholder behavior
-  searchInput.addEventListener("input", () => {
-    const query = searchInput.value.trim();
+  // App list container
+  const appGrid = document.createElement("div");
+  appGrid.id = "appGrid";
+  appGrid.className = "app-grid";
 
-    if (query.length > 0) {
-      searchInput.setAttribute(
-        "aria-label",
-        "Search: " + query
+  if (appsSection) {
+    appsSection.appendChild(appGrid);
+  }
+
+  function showMessage(message) {
+    if (!emptyState) return;
+
+    emptyState.hidden = false;
+    emptyState.querySelector("h3").textContent = message;
+
+    const paragraph = emptyState.querySelector("p");
+    if (paragraph) {
+      paragraph.textContent =
+        "Please try again later or visit our Telegram channel.";
+    }
+
+    appGrid.replaceChildren();
+  }
+
+  function createAppCard(app) {
+    const card = document.createElement("article");
+    card.className = "app-card";
+
+    const icon = document.createElement("img");
+    icon.className = "app-icon";
+    icon.alt = "";
+    icon.loading = "lazy";
+    icon.src = app.icon_url || "https://placehold.co/96x96";
+    icon.addEventListener("error", () => {
+      icon.src = "https://placehold.co/96x96";
+    }, { once: true });
+
+    const info = document.createElement("div");
+    info.className = "app-info";
+
+    const title = document.createElement("h3");
+    title.className = "app-title";
+    title.textContent = app.title || "Untitled App";
+
+    const meta = document.createElement("p");
+    meta.className = "app-meta";
+    meta.textContent = [
+      app.category || "Apps",
+      app.version ? "v" + app.version : ""
+    ].filter(Boolean).join(" · ");
+
+    info.append(icon, title, meta);
+
+    if (app.description) {
+      const description = document.createElement("p");
+      description.className = "app-description";
+      description.textContent = app.description;
+      info.appendChild(description);
+    }
+
+    const download = document.createElement("a");
+    download.className = "app-download";
+    download.textContent = "Download";
+    download.href = app.apk_url;
+    download.target = "_blank";
+    download.rel = "noopener noreferrer";
+
+    card.append(info, download);
+    return card;
+  }
+
+  function renderApps(apps) {
+    appGrid.replaceChildren();
+
+    if (appCount) {
+      appCount.textContent = String(apps.length);
+    }
+
+    if (emptyState) {
+      emptyState.hidden = apps.length > 0;
+    }
+
+    if (apps.length === 0) {
+      if (emptyState) {
+        const heading = emptyState.querySelector("h3");
+        const paragraph = emptyState.querySelector("p");
+
+        if (heading) heading.textContent = "No Apps Found";
+        if (paragraph) {
+          paragraph.textContent =
+            "No published apps match your search.";
+        }
+      }
+      return;
+    }
+
+    apps.forEach((app) => {
+      appGrid.appendChild(createAppCard(app));
+    });
+  }
+
+  // Load published apps from Supabase
+  async function loadApps() {
+    if (
+      SUPABASE_URL.includes("YOUR_SUPABASE") ||
+      SUPABASE_PUBLISHABLE_KEY.includes("YOUR_SUPABASE")
+    ) {
+      showMessage("Supabase Setup Needed");
+      console.error("Add your Supabase URL and publishable key to script.js.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/apps?select=id,title,description,version,category,icon_url,apk_url,featured,published,created_at&published=eq.true&order=created_at.desc`,
+        {
+          headers: {
+            apikey: SUPABASE_PUBLISHABLE_KEY
+          }
+        }
       );
-    } else {
-      searchInput.setAttribute("aria-label", "Search apps");
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Supabase error:", response.status, errorText);
+        showMessage("Could Not Load Apps");
+        return;
+      }
+
+      allApps = await response.json();
+      renderApps(allApps);
+    } catch (error) {
+      console.error("Failed to load apps:", error);
+      showMessage("Connection Error");
     }
+  }
+
+  // Search apps
+  searchInput?.addEventListener("input", () => {
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filteredApps = allApps.filter((app) => {
+      const searchableText = [
+        app.title,
+        app.description,
+        app.category,
+        app.version
+      ].filter(Boolean).join(" ").toLowerCase();
+
+      return searchableText.includes(query);
+    });
+
+    renderApps(filteredApps);
   });
 
-  // Prevent search from submitting a form
-  searchInput.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  });
-
+  loadApps();
 })();
