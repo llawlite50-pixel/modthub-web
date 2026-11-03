@@ -2,8 +2,8 @@
 "use strict";
 
 // Supabase project information
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+const SUPABASE_URL = "https://clbuxkvagwpsmjmlngsf.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_rJc5pu_T3JTNgKUXW38dOg_zNbOdljJ";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const token = sessionStorage.getItem("modthub_admin_token");
