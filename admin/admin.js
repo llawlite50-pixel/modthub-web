@@ -2,7 +2,7 @@
 "use strict";
 
 // Supabase project information
-const SUPABASE_URL = "https://your-project-id.supabase.co";
+const SUPABASE_URL = "https://clbuxkvagwpsmjmlngsf.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_rJc5pu_T3JTNgKUXW38dOg_zNbOdljJ";
 
 document.addEventListener("DOMContentLoaded", async () => {
