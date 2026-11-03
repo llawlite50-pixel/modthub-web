@@ -675,3 +675,44 @@ button {
     height: 82px;
   }
 }
+
+
+/* App cards - dark theme */
+html[data-theme="dark"] .app-card {
+  background: #11151e;
+  color: #f5f5f5;
+  border-color: #263044;
+}
+
+/* App cards - light theme */
+html[data-theme="light"] .app-card {
+  background: #ffffff;
+  color: #151a2b;
+  border-color: #dce2ec;
+  box-shadow: 0 4px 18px rgba(20, 30, 50, 0.07);
+}
+
+html[data-theme="light"] .app-title {
+  color: #151a2b;
+}
+
+html[data-theme="light"] .app-meta,
+html[data-theme="light"] .app-description {
+  color: #586174;
+}
+
+html[data-theme="light"] .app-version {
+  background: #fff0f2;
+  color: #e91e48;
+  border-color: #ffc6d0;
+}
+
+html[data-theme="dark"] .app-title {
+  color: #f5f5f5;
+}
+
+.app-card {
+  transition: background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease;
+}
