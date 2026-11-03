@@ -6,11 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MoDThub Admin Login</title>
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       min-height: 100vh;
@@ -46,10 +42,7 @@
       font-size: 13px;
     }
 
-    h2 {
-      font-size: 20px;
-      margin-bottom: 22px;
-    }
+    h2 { font-size: 20px; margin-bottom: 22px; }
 
     label {
       display: block;
@@ -68,9 +61,7 @@
       outline: none;
     }
 
-    input:focus {
-      border-color: #f5c542;
-    }
+    input:focus { border-color: #f5c542; }
 
     button {
       width: 100%;
@@ -84,13 +75,17 @@
       cursor: pointer;
     }
 
+    button:disabled { opacity: .6; cursor: wait; }
+
     .notice {
       margin-top: 20px;
       color: #888;
-      font-size: 11px;
+      font-size: 12px;
       text-align: center;
       line-height: 1.6;
     }
+
+    .error { color: #ff7777; }
   </style>
 </head>
 <body>
@@ -103,27 +98,59 @@
     <form id="loginForm">
       <label for="email">Admin Email</label>
       <input id="email" type="email"
-        placeholder="Enter admin email" required>
+        placeholder="Enter admin email" autocomplete="username" required>
 
       <label for="password">Password</label>
       <input id="password" type="password"
-        placeholder="Enter password" required>
+        placeholder="Enter password" autocomplete="current-password" required>
 
-      <button type="submit">Secure Login</button>
+      <button id="loginButton" type="submit">Secure Login</button>
     </form>
 
-    <p class="notice">
-      Authorized administrators only.<br>
-      Secure server authentication will be connected next.
+    <p id="message" class="notice" role="status">
+      Authorized administrators only.
     </p>
   </main>
 
   <script>
-    document.getElementById("loginForm")
-      .addEventListener("submit", function(event) {
-        event.preventDefault();
-        alert("Authentication backend is not connected yet.");
-      });
+    const form = document.getElementById("loginForm");
+    const button = document.getElementById("loginButton");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      button.disabled = true;
+      button.textContent = "Checking...";
+      message.textContent = "Verifying your account...";
+      message.className = "notice";
+
+      try {
+        const response = await fetch("/.netlify/functions/admin-login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || "Login failed");
+        }
+
+        sessionStorage.setItem("modthub_admin_token", result.access_token);
+        window.location.href = "/admin/dashboard.html";
+
+      } catch (error) {
+        message.textContent = error.message || "Login failed. Try again.";
+        message.className = "notice error";
+        button.disabled = false;
+        button.textContent = "Secure Login";
+      }
+    });
   </script>
 </body>
 </html>
