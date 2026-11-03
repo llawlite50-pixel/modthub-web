@@ -53,9 +53,8 @@ export default async (request) => {
       `${url}/rest/v1/admins?user_id=eq.${encodeURIComponent(user.id)}&select=user_id`,
       {
         headers: {
-          apikey: secretKey,
-          Authorization: `Bearer ${secretKey}`
-        }
+  apikey: secretKey
+}
       }
     );
 
