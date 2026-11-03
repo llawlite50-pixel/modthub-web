@@ -9,12 +9,9 @@
   <script src="admin.js" defer></script>
 </head>
 <body>
-
 <div class="admin-layout">
-
   <aside class="sidebar">
     <div class="brand">MoDThub</div>
-
     <a href="dashboard.html" class="active">🏠 Dashboard</a>
     <a href="#apps">📱 Manage Apps</a>
     <a href="#posts">📝 Manage Posts</a>
@@ -23,80 +20,108 @@
     <a href="#settings">⚙️ Settings</a>
     <a href="#admins">👥 Admin Accounts</a>
     <a href="../index.html">🌐 Visit Website</a>
+    <a href="#" id="logoutButton">🚪 Logout</a>
   </aside>
 
   <main class="main-content">
-
     <header class="topbar">
       <h1>Dashboard</h1>
       <span>MoDThub Admin</span>
     </header>
 
+    <p id="statusMessage" role="status" style="margin:15px 0"></p>
+
     <section class="stats-grid">
-
-      <div class="stat-card">
-        <h3>Total Apps</h3>
-        <strong id="totalApps">0</strong>
-      </div>
-
-      <div class="stat-card">
-        <h3>Total Posts</h3>
-        <strong id="totalPosts">0</strong>
-      </div>
-
-      <div class="stat-card">
-        <h3>Downloads</h3>
-        <strong id="totalDownloads">0</strong>
-      </div>
-
-      <div class="stat-card">
-        <h3>Admins</h3>
-        <strong id="totalAdmins">0</strong>
-      </div>
-
+      <div class="stat-card"><h3>Total Apps</h3><strong id="totalApps">0</strong></div>
+      <div class="stat-card"><h3>Total Posts</h3><strong id="totalPosts">0</strong></div>
+      <div class="stat-card"><h3>Downloads</h3><strong id="totalDownloads">0</strong></div>
+      <div class="stat-card"><h3>Admins</h3><strong id="totalAdmins">—</strong></div>
     </section>
 
     <section class="panel" id="apps">
       <h2>App Management</h2>
-      <p>Upload and manage your applications.</p>
-      <br>
-      <button class="primary-btn" type="button"
-        onclick="alert('App upload backend is not connected yet.')">
-        + Add New App
+      <p>Add information for an APK already stored in your GitHub repository.</p>
+
+      <form id="appForm">
+        <label for="appTitle">App Name *</label>
+        <input id="appTitle" type="text" required maxlength="150"
+          placeholder="Example: MoDThub App">
+
+        <label for="appSlug">Slug (optional)</label>
+        <input id="appSlug" type="text" maxlength="150"
+          placeholder="example-modthub-app">
+
+        <label for="appVersion">Version</label>
+        <input id="appVersion" type="text" maxlength="50"
+          placeholder="1.0.0">
+
+        <label for="appCategory">Category</label>
+        <input id="appCategory" type="text" maxlength="100"
+          placeholder="Tools">
+
+        <label for="appDescription">Description</label>
+        <textarea id="appDescription" rows="4"
+          placeholder="Describe the app..."></textarea>
+
+        <label for="appIcon">Icon URL (optional)</label>
+        <input id="appIcon" type="url" placeholder="https://...">
+
+        <label for="appApk">APK Download URL *</label>
+        <input id="appApk" type="url" required placeholder="https://...apk">
+
+        <label>
+          <input id="appFeatured" type="checkbox">
+          Featured App
+        </label>
+
+        <label>
+          <input id="appPublished" type="checkbox" checked>
+          Published
+        </label>
+
+        <button class="primary-btn" id="saveAppButton" type="submit">
+          Save App
+        </button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>App List</h2>
+      <button class="primary-btn" id="refreshApps" type="button">
+        Refresh Apps
       </button>
+      <div id="appList" style="margin-top:18px">Loading apps...</div>
     </section>
 
     <section class="panel" id="posts">
       <h2>Post Management</h2>
-      <p>Create and manage website posts.</p>
+      <p>Post management is not connected yet.</p>
     </section>
 
     <section class="panel" id="categories">
       <h2>Categories</h2>
-      <p>Manage app categories.</p>
+      <p>Category management is not connected yet.</p>
     </section>
 
     <section class="panel" id="ads">
       <h2>Ad Management</h2>
-      <p>Adsterra Banner, Social Bar and Popunder settings.</p>
+      <p>Adsterra settings are not connected yet.</p>
     </section>
 
     <section class="panel" id="settings">
       <h2>Website Settings</h2>
-      <p>Manage website information and announcements.</p>
+      <p>Website settings are not connected yet.</p>
     </section>
 
     <section class="panel" id="admins">
       <h2>Admin Accounts</h2>
-      <p>Multiple admin account management will be connected securely.</p>
+      <p>Admin account management is not connected yet.</p>
     </section>
 
     <footer style="margin-top:30px;color:#929bad;font-size:12px">
       © <span id="currentYear"></span> MoDThub Admin
     </footer>
-
   </main>
 </div>
-
 </body>
 </html>
