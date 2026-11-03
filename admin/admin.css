@@ -1,0 +1,161 @@
+
+:root {
+  --bg: #090b10;
+  --card: #141923;
+  --border: #252d3b;
+  --text: #f5f6fa;
+  --muted: #929bad;
+  --accent: #ff4757;
+  --gold: #f5c542;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  padding: 25px 18px;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+}
+
+.brand {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 35px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 13px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 9px;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: rgba(255,71,87,.13);
+  color: var(--accent);
+}
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.topbar h1 {
+  font-size: 25px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 22px;
+}
+
+.stat-card h3 {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.stat-card strong {
+  font-size: 29px;
+}
+
+.panel {
+  margin-top: 25px;
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.panel h2 {
+  margin-bottom: 15px;
+}
+
+.primary-btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+@media (max-width: 850px) {
+  .sidebar {
+    width: 190px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .sidebar {
+    width: 65px;
+    padding: 15px 7px;
+  }
+
+  .brand {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .sidebar a {
+    font-size: 10px;
+    padding: 12px 4px;
+    text-align: center;
+  }
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .stat-card {
+    padding: 13px;
+  }
+}
