@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoDThub Admin Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 390px;
+      padding: 35px 28px;
+      background: #121212;
+      border: 1px solid #292929;
+      border-radius: 16px;
+    }
+
+    .logo {
+      color: #f5c542;
+      font-size: 27px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #999;
+      margin-bottom: 30px;
+      font-size: 13px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      color: #ccc;
+      font-size: 13px;
+      margin: 16px 0 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      background: #080808;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #f5c542;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: #f5c542;
+      color: #080808;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .notice {
+      margin-top: 20px;
+      color: #888;
+      font-size: 11px;
+      text-align: center;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <main class="login-box">
+    <div class="logo">MoDThub</div>
+    <p class="subtitle">ADMIN CONTROL CENTER</p>
+
+    <h2>Welcome Back</h2>
+
+    <form id="loginForm">
+      <label for="email">Admin Email</label>
+      <input id="email" type="email"
+        placeholder="Enter admin email" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        placeholder="Enter password" required>
+
+      <button type="submit">Secure Login</button>
+    </form>
+
+    <p class="notice">
+      Authorized administrators only.<br>
+      Secure server authentication will be connected next.
+    </p>
+  </main>
+
+  <script>
+    document.getElementById("loginForm")
+      .addEventListener("submit", function(event) {
+        event.preventDefault();
+        alert("Authentication backend is not connected yet.");
+      });
+  </script>
+</body>
+</html>
