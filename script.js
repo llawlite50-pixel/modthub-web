@@ -66,52 +66,39 @@
     appGrid.replaceChildren();
   }
 
-  function createAppCard(app) {
-    const card = document.createElement("article");
-    card.className = "app-card";
+  
+function createAppCard(app) {
+  const card = document.createElement("a");
+  card.className = "app-card";
+  card.href = app.apk_url;
+  card.setAttribute("aria-label", `Download ${app.title}`);
 
-    const icon = document.createElement("img");
-    icon.className = "app-icon";
-    icon.alt = "";
-    icon.loading = "lazy";
-    icon.src = app.icon_url || "https://placehold.co/96x96";
-    icon.addEventListener("error", () => {
-      icon.src = "https://placehold.co/96x96";
-    }, { once: true });
+  const icon = document.createElement("img");
+  icon.className = "app-icon";
+  icon.alt = app.title || "App icon";
+  icon.loading = "lazy";
+  icon.src = app.icon_url || "https://placehold.co/128x128";
+  icon.addEventListener("error", () => {
+    icon.src = "https://placehold.co/128x128";
+  }, { once: true });
 
-    const info = document.createElement("div");
-    info.className = "app-info";
+  const title = document.createElement("h3");
+  title.className = "app-title";
+  title.textContent = app.title || "Untitled App";
 
-    const title = document.createElement("h3");
-    title.className = "app-title";
-    title.textContent = app.title || "Untitled App";
+  const rating = document.createElement("div");
+  rating.className = "app-rating";
+  rating.textContent = "★★★★★";
+  rating.setAttribute("aria-label", "5 stars");
 
-    const meta = document.createElement("p");
-    meta.className = "app-meta";
-    meta.textContent = [
-      app.category || "Apps",
-      app.version ? "v" + app.version : ""
-    ].filter(Boolean).join(" · ");
+  const version = document.createElement("span");
+  version.className = "app-version";
+  version.textContent = `v${app.version || "1.0"}`;
 
-    info.append(icon, title, meta);
+  card.append(icon, title, rating, version);
+  return card;
+}
 
-    if (app.description) {
-      const description = document.createElement("p");
-      description.className = "app-description";
-      description.textContent = app.description;
-      info.appendChild(description);
-    }
-
-    const download = document.createElement("a");
-    download.className = "app-download";
-    download.textContent = "Download";
-    download.href = app.apk_url;
-    download.target = "_blank";
-    download.rel = "noopener noreferrer";
-
-    card.append(info, download);
-    return card;
-  }
 
   function renderApps(apps) {
     appGrid.replaceChildren();
