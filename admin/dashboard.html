@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoDThub Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin.js" defer></script>
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <div class="brand">MoDThub</div>
+
+    <a href="dashboard.html" class="active">🏠 Dashboard</a>
+    <a href="#apps">📱 Manage Apps</a>
+    <a href="#posts">📝 Manage Posts</a>
+    <a href="#categories">📂 Categories</a>
+    <a href="#ads">📢 Ad Management</a>
+    <a href="#settings">⚙️ Settings</a>
+    <a href="#admins">👥 Admin Accounts</a>
+    <a href="../index.html">🌐 Visit Website</a>
+  </aside>
+
+  <main class="main-content">
+
+    <header class="topbar">
+      <h1>Dashboard</h1>
+      <span>MoDThub Admin</span>
+    </header>
+
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <h3>Total Apps</h3>
+        <strong id="totalApps">0</strong>
+      </div>
+
+      <div class="stat-card">
+        <h3>Total Posts</h3>
+        <strong id="totalPosts">0</strong>
+      </div>
+
+      <div class="stat-card">
+        <h3>Downloads</h3>
+        <strong id="totalDownloads">0</strong>
+      </div>
+
+      <div class="stat-card">
+        <h3>Admins</h3>
+        <strong id="totalAdmins">0</strong>
+      </div>
+
+    </section>
+
+    <section class="panel" id="apps">
+      <h2>App Management</h2>
+      <p>Upload and manage your applications.</p>
+      <br>
+      <button class="primary-btn" type="button"
+        onclick="alert('App upload backend is not connected yet.')">
+        + Add New App
+      </button>
+    </section>
+
+    <section class="panel" id="posts">
+      <h2>Post Management</h2>
+      <p>Create and manage website posts.</p>
+    </section>
+
+    <section class="panel" id="categories">
+      <h2>Categories</h2>
+      <p>Manage app categories.</p>
+    </section>
+
+    <section class="panel" id="ads">
+      <h2>Ad Management</h2>
+      <p>Adsterra Banner, Social Bar and Popunder settings.</p>
+    </section>
+
+    <section class="panel" id="settings">
+      <h2>Website Settings</h2>
+      <p>Manage website information and announcements.</p>
+    </section>
+
+    <section class="panel" id="admins">
+      <h2>Admin Accounts</h2>
+      <p>Multiple admin account management will be connected securely.</p>
+    </section>
+
+    <footer style="margin-top:30px;color:#929bad;font-size:12px">
+      © <span id="currentYear"></span> MoDThub Admin
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>
