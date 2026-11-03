@@ -81,7 +81,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         { headers }
       );
 
-      if (!response.ok) throw new Error("Could not load apps.");
+      if (!response.ok) {
+  const errorText = await response.text();
+  console.error("Supabase error:", response.status, errorText);
+  throw new Error(
+    `Supabase error ${response.status}: ${errorText}`
+  );
+}
 
       const apps = await response.json();
 
