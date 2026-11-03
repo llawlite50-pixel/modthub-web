@@ -1,11 +1,10 @@
 
 (() => {
   "use strict";
-
   // Replace these with your actual Supabase project values.
   // Never put your secret/service-role key in this file.
-  const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-  const SUPABASE_PUBLISHABLE_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+  const SUPABASE_URL = "https://clbuxkvagwpsmjmlngsf.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_rJc5pu_T3JTNgKUXW38dOg_zNbOdljJ";
 
   const themeToggle = document.getElementById("themeToggle");
   const searchInput = document.getElementById("searchInput");
